@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Heart Disease Predictor</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            margin: 0;
+        }
+
+        .container {
+            width: 420px;
+            margin: 40px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            top: 12px;
+            left: 10px;
+            color: gray;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px 10px 10px 35px;
+            margin-top: 5px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        input:focus, select:focus {
+            border-color: #4facfe;
+            box-shadow: 0 0 5px #4facfe;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: linear-gradient(to right, #28a745, #218838);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .result {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .success { color: green; }
+        .danger { color: red; }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2><i class="fa-solid fa-heart-pulse"></i> Heart Predictor</h2>
+
+    <form action="/predict" method="post">
+
+        <label>Age</label>
+        <div class="input-group">
+            <i class="fa-solid fa-user"></i>
+            <input type="number" name="age" required>
+        </div>
+
+        <label>Sex</label>
+        <div class="input-group">
+            <i class="fa-solid fa-venus-mars"></i>
+            <select name="sex">
+                <option value="1">Male</option>
+                <option value="0">Female</option>
+            </select>
+        </div>
+
+        <label>Chest Pain Type</label>
+        <div class="input-group">
+            <i class="fa-solid fa-heart-circle-bolt"></i>
+            <select name="cp">
+                <option value="0">Typical Angina</option>
+                <option value="1">Atypical Angina</option>
+                <option value="2">Non-anginal Pain</option>
+                <option value="3">Asymptomatic</option>
+            </select>
+        </div>
+
+        <label>Blood Pressure</label>
+        <div class="input-group">
+            <i class="fa-solid fa-stethoscope"></i>
+            <input type="number" name="trestbps" required>
+        </div>
+
+        <label>Cholesterol</label>
+        <div class="input-group">
+            <i class="fa-solid fa-vial"></i>
+            <input type="number" name="chol" required>
+        </div>
+
+        <label>Fasting Blood Sugar</label>
+        <div class="input-group">
+            <i class="fa-solid fa-droplet"></i>
+            <select name="fbs">
+                <option value="0">Normal</option>
+                <option value="1">High</option>
+            </select>
+        </div>
+
+        <label>Rest ECG</label>
+        <div class="input-group">
+            <i class="fa-solid fa-wave-square"></i>
+            <select name="restecg">
+                <option value="0">Normal</option>
+                <option value="1">ST abnormality</option>
+                <option value="2">Hypertrophy</option>
+            </select>
+        </div>
+
+        <label>Max Heart Rate</label>
+        <div class="input-group">
+            <i class="fa-solid fa-heart"></i>
+            <input type="number" name="thalach" required>
+        </div>
+
+        <label>Exercise Angina</label>
+        <div class="input-group">
+            <i class="fa-solid fa-running"></i>
+            <select name="exang">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+
+        <label>Oldpeak</label>
+        <div class="input-group">
+            <i class="fa-solid fa-chart-line"></i>
+            <input type="number" step="0.1" name="oldpeak" required>
+        </div>
+
+        <label>Slope</label>
+        <div class="input-group">
+            <i class="fa-solid fa-chart-area"></i>
+            <select name="slope">
+                <option value="0">Upsloping</option>
+                <option value="1">Flat</option>
+                <option value="2">Downsloping</option>
+            </select>
+        </div>
+
+        <label>Number of Vessels</label>
+        <div class="input-group">
+            <i class="fa-solid fa-network-wired"></i>
+            <select name="ca">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+        </div>
+
+        <label>Thal</label>
+        <div class="input-group">
+            <i class="fa-solid fa-dna"></i>
+            <select name="thal">
+                <option value="1">Normal</option>
+                <option value="2">Fixed Defect</option>
+                <option value="3">Reversible Defect</option>
+            </select>
+        </div>
+
+        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> Predict</button>
+
+    </form>
+
+    <div class="result 
+        {% if 'No Heart Disease' in prediction_text %}success
+        {% elif 'Heart Disease' in prediction_text %}danger
+        {% endif %}
+    ">
+        {{ prediction_text }}
+    </div>
+
+</div>
+
+</body>
+</html>
